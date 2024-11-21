@@ -1,37 +1,40 @@
 ---
 
-# 👋 Hi, I’m **@LazyGuy-jpg**
+# 👋 Hello, I’m **@LazyGuy-jpg**
 
-Welcome to my corner of the internet! I’m a developer who loves creating impactful tools and projects while keeping things simple (because, let’s be honest, I’m kind of lazy 😎). Despite that, my output is top-notch—so, no complaints there!
+Welcome, this is my area in the World Wide Web! A lazy developer myself, I prefer creating something that is not too complicated yet works like magic! Despite that, I always deliver quality! So, no complaints there!
 
 ---
 
 ## 👀 Interests
 
-- 🖥 **Programming**: Passionate about Python, Node.js, and Asterisk.  
-- 🌐 **Telephony & Automation**: Working with Asterisk and custom IVR systems.  
-- 🎲 **Creative Problem Solving**: From debugging to feature implementation, I’m all about getting the job done effectively.  
+- 🖥 **Programming**: Loves Python, Node.js, and Asterisk.
+
+- 🌐 **Telco & Automation**: Working on Asterisk and custom IVR systems.
+
+- 🎲 **Creative Construction**: Being a part of any project, right from debugging to feature addition, is my goal.
 
 ---
 
 ## 🌱 Currently Learning
 
-- 🔧 Exploring **GoLang** for high-performance applications.  
+- 🔧 Trying my hands on **GoLang** for developing performance-centric applications.
 
 ---
 
 ## 📫 Get in Touch
 
-- 📨 Telegram: [@steroidbackup]  
-
----
-
-## ⚡ Fun Fact  
-
-- I’m a **lazy coder** but take pride in creating **the best outputs**. Quality over quantity, always! 😎  
-
-Feel free to connect with me or check out my projects to see what I’m up to. If you like what you see, don’t forget to ⭐ my repos!  
+- 📨 Telegram: [@steroidbackup]
 
 --- 
 
-What do you think? 😊
+## ⚡ Fun Fact
+
+- I am a **lazy coder**, but **the highest outputs** are the things that I execute worth. Quality, always comes before quantity! 😎
+
+Please connect with me or go through my projects. In case you think it’s worth, do not miss to ⭐ my repos!
+
+--- 
+
+Thanks for sharing your opinion with me! What do you think? 😌
+
