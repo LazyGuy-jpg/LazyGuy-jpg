@@ -1,0 +1,1 @@
+export { AdminDocumentationStub as default } from '../../utils/stubs';

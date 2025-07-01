@@ -1,0 +1,1 @@
+export { AdminSettingsStub as default } from '../../utils/stubs';

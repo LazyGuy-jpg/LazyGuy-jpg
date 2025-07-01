@@ -1,0 +1,1 @@
+export { DocumentationStub as default } from '../../utils/stubs';

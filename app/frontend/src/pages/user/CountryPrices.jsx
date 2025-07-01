@@ -1,0 +1,1 @@
+export { CountryPricesStub as default } from '../../utils/stubs';

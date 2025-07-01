@@ -1,0 +1,1 @@
+export { AdminDashboardStub as default } from '../../utils/stubs';

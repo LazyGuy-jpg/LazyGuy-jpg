@@ -1,0 +1,1 @@
+export { AdminCallLogsStub as default } from '../../utils/stubs';

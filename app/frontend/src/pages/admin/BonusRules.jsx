@@ -1,0 +1,1 @@
+export { BonusRulesStub as default } from '../../utils/stubs';

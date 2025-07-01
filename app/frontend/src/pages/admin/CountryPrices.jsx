@@ -1,0 +1,1 @@
+export { AdminCountryPricesStub as default } from '../../utils/stubs';

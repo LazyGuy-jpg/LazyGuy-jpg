@@ -1,0 +1,1 @@
+export { RegistrationsStub as default } from '../../utils/stubs';

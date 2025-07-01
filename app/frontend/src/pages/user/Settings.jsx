@@ -1,0 +1,1 @@
+export { SettingsStub as default } from '../../utils/stubs';
