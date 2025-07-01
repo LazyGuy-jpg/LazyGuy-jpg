@@ -1,6 +1,6 @@
 ---
 
-# 👋 Hello, I’m **@LazyGuy-jpg**
+# 👋 Hello, I’m **@Ostrava**
 
 Welcome, this is my area in the World Wide Web! A lazy developer myself, I prefer creating something that is not too complicated yet works like magic! Despite that, I always deliver quality! So, no complaints there!
 
@@ -24,7 +24,7 @@ Welcome, this is my area in the World Wide Web! A lazy developer myself, I prefe
 
 ## 📫 Get in Touch
 
-- 📨 Telegram: [@steroidbackup]
+- 📨 Telegram: [@ostdev]
 
 --- 
 
