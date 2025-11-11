@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ChildSafe Monitor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>ChildSafe Dashboard</h1>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/apk-builder">APK Builder</a>
+            <a href="/fcm-console">FCM Console</a>
+            <button id="logout-button">Logout</button>
+        </nav>
+    </header>
+    <main class="dashboard-grid">
+        <div id="screen-tile" class="tile">
+            <h2>Live Screen</h2>
+            <video id="screen-video" autoplay muted playsinline></video>
+        </div>
+        <div id="camera-tile" class="tile">
+            <h2>Live Camera</h2>
+            <video id="camera-video" autoplay playsinline></video>
+        </div>
+        <div id="map-tile" class="tile">
+            <h2>Live Location</h2>
+            <div id="map"></div>
+        </div>
+        <div id="battery-tile" class="tile">
+            <h2>Device Status</h2>
+            <p>Battery: <span id="battery-level">--</span>%</p>
+        </div>
+        <div id="controls-tile" class="tile">
+            <h2>Remote Control</h2>
+            <button id="lock-button">Lock Device</button>
+        </div>
+    </main>
+    <script src="/static/ws_client.js"></script>
+    <script src="/static/webrtc_receiver.js"></script>
+    <script src="/static/map_tile.js"></script>
+    <!-- Add Leaflet for map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</body>
+</html>
