@@ -39,6 +39,23 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     decoded_token = auth.verify_firebase_token(token)
     return decoded_token
 
+# --- Config Endpoint ---
+@app.get("/firebase-config")
+def get_firebase_config():
+    """Provides the client-side Firebase configuration."""
+    # These should be set as environment variables in your deployment.
+    config = {
+        "apiKey": os.getenv("FIREBASE_API_KEY"),
+        "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
+        "projectId": os.getenv("FIREBASE_PROJECT_ID"),
+        "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
+        "messagingSenderId": os.getenv("FIREBASE_MESSAGING_SENDER_ID"),
+        "appId": os.getenv("FIREBASE_APP_ID")
+    }
+    if not all(config.values()):
+        raise HTTPException(status_code=500, detail="Firebase configuration is missing on the server.")
+    return config
+
 # --- HTML Serving Endpoints ---
 @app.get("/", response_class=HTMLResponse)
 async def read_login(request: Request):
@@ -84,6 +101,25 @@ async def send_fcm_endpoint(request: Request, current_user: Dict = Depends(get_c
     print(f"User {current_user['uid']} sending FCM command: {command} to child {child_id}")
     # In a real implementation, this would call firebase_bridge.push_command
     return {"status": "fcm_sent", "child_id": child_id, "command": command}
+
+@app.post("/register-child")
+async def register_child_device(request: Request):
+    """
+    Endpoint for the Android client to register or update its FCM token.
+    This would be called by the Android app on initial startup and on token refresh.
+    """
+    payload = await request.json()
+    child_id = payload.get("child_id") # A unique identifier for the device
+    fcm_token = payload.get("fcm_token")
+
+    if not child_id or not fcm_token:
+        raise HTTPException(status_code=400, detail="child_id and fcm_token are required.")
+
+    # TODO: In a real database, you would save this token.
+    # For now, we just log it.
+    print(f"Received registration from Child ID: {child_id} with FCM Token: {fcm_token}")
+
+    return {"status": "registered", "child_id": child_id}
 
 @app.post("/command/{child_id}")
 @auth.mutual_tls_required
