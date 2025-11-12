@@ -53,6 +53,9 @@ dependencies {
     // Encrypted SharedPreferences
     implementation("androidx.security:security-crypto:1.0.0")
 
+    // WebRTC for video streaming
+    implementation("org.webrtc:google-webrtc:1.0.32006")
+
     // Testing
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
