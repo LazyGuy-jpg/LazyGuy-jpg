@@ -38,9 +38,21 @@
             <h2>Remote Control</h2>
             <button id="lock-button">Lock Device</button>
         </div>
+        <div id="sms-tile" class="tile">
+            <h2>Recent SMS</h2>
+            <ul id="sms-list"></ul>
+        </div>
+        <div id="call-log-tile" class="tile">
+            <h2>Recent Calls</h2>
+            <ul id="call-log-list"></ul>
+        </div>
     </main>
     <script src="/static/ws_client.js"></script>
     <script src="/static/webrtc_receiver.js"></script>
+
+    <!-- Firebase SDK for DB access -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
     <script src="/static/map_tile.js"></script>
     <!-- Add Leaflet for map -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />

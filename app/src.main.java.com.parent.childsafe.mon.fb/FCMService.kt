@@ -14,8 +14,7 @@ import java.io.IOException
 class FCMService : FirebaseMessagingService() {
 
     private val client = OkHttpClient()
-    // TODO: This should be configurable
-    private val serverUrl = "http://10.0.2.2:8000"
+    private val serverUrl = BuildConfig.SERVER_URL
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)

@@ -19,9 +19,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "SERVER_URL", "\"http://10.0.2.2:8000\"")
+        }
         release {
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            // You would define your production server URL here
+            buildConfigField("String", "SERVER_URL", "\"https://your-production-server.com\"")
         }
     }
     compileOptions {
@@ -55,6 +60,9 @@ dependencies {
 
     // WebRTC for video streaming
     implementation("org.webrtc:google-webrtc:1.0.32006")
+
+    // Location Services
+    implementation("com.google.android.gms:play-services-location:21.2.0")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
